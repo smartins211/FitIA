@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitAI | Tu entrenador inteligente</title>
+<style>
+:root{--bg:#101510;--panel:#1a211b;--green:#b8ff62;--muted:#aab4a8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f6f8f4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+header{padding:22px 6%;border-bottom:1px solid #293229}
+.logo{font-size:28px;font-weight:900}.logo span{color:var(--green)}
+main{max-width:800px;margin:auto;padding:30px 20px}
+.tag{color:var(--green);font-size:12px;letter-spacing:2px;font-weight:bold}
+h1{font-size:clamp(42px,8vw,65px);line-height:1.05;letter-spacing:-2px}
+h1 span{color:var(--green)}
+p{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid #303a30;border-radius:18px;padding:22px;margin:24px 0}
+label{display:block;margin:15px 0 7px}
+select{width:100%;padding:14px;background:#101710;color:white;border:1px solid #3b473b;border-radius:10px;font-size:16px}
+button{width:100%;padding:16px;margin-top:22px;background:var(--green);color:#14200e;font-weight:bold;border:0;border-radius:10px;font-size:16px}
+.result{display:none}
+h3{color:var(--green)}
+footer{text-align:center;padding:25px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="logo">Fit<span>AI</span></div></header>
+<main>
+<section>
+<div class="tag">TU ENTRENADOR INTELIGENTE</div>
+<h1>Tu mejor versión.<br><span>Tu propio plan.</span></h1>
+<p>Organiza tus entrenamientos y mejora tus hábitos, paso a paso.</p>
+</section>
+<section class="panel">
+<h2>Diseña tu plan</h2>
+<form id="form">
+<label for="goal">¿Cuál es tu objetivo?</label>
+<select id="goal">
+<option value="muscle">Ganar músculo</option>
+<option value="fat">Perder grasa</option>
+<option value="strength">Ganar fuerza</option>
+<option value="fitness">Mejorar mi forma física</option>
+</select>
+<label for="level">Tu experiencia</label>
+<select id="level">
+<option value="beginner">Principiante</option>
+<option value="medium">Intermedio</option>
+<option value="advanced">Avanzado</option>
+</select>
+<label for="days">Días de entrenamiento por semana</label>
+<select id="days">
+<option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option>
+</select>
+<label for="place">¿Dónde entrenas?</label>
+<select id="place">
+<option>Gimnasio</option><option>En casa</option><option>Al aire libre</option>
+</select>
+<button type="submit">Crear mi plan →</button>
+</form>
+</section>
+<section class="panel result" id="result">
+<h2 id="title">Tu plan</h2>
+<div id="routine"></div>
+<h3>Consejo de alimentación</h3>
+<p id="food"></p>
+<p>Propuesta orientativa. No sustituye una valoración profesional.</p>
+</section>
+</main>
+<footer>FitAI · Entrena con propósito · Prototipo inicial</footer>
+<script>
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
+const goal=document.getElementById("goal").value;
+const level=document.getElementById("level").value;
+const days=Number(document.getElementById("days").value);
+const place=document.getElementById("place").value;
+const titles={muscle:"Construye músculo",fat:"Mejora tu composición corporal",strength:"Desarrolla tu fuerza",fitness:"Mejora tu condición física"};
+const food={muscle:"Incluye proteína, carbohidratos, frutas, verduras y grasas saludables. Come suficiente y progresa gradualmente.",fat:"Prioriza alimentos variados, verduras, frutas y proteínas. Busca hábitos sostenibles y evita dietas extremas.",strength:"Mantén una alimentación suficiente y variada, buena hidratación y descanso entre sesiones.",fitness:"Combina una alimentación equilibrada, actividad regular, hidratación y sueño adecuado."};
+let html="<ul>";
+for(let i=1;i<=7;i++){
+if(i<=days) html+="<li>Día "+i+": "+(i%2===0?"Tren inferior":"Tren superior o cuerpo completo")+" — "+place+"</li>";
+else html+="<li>Día "+i+": descanso o paseo suave</li>";
+}
+html+="</ul>";
+html+="<p>Experiencia: "+({beginner:"Principiante",medium:"Intermedio",advanced:"Avanzado"}[level])+". Empieza con una dificultad adecuada y prioriza la técnica.</p>";
+document.getElementById("title").textContent=titles[goal];
+document.getElementById("routine").innerHTML=html;
+document.getElementById("food").textContent=food[goal];
+document.getElementById("result").style.display="block";
+document.getElementById("result").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
